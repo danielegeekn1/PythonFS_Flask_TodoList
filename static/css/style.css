@@ -1,0 +1,58 @@
+body {
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+	background-color: whitesmoke;
+}
+h1,
+h2 {
+	text-align: center;
+}
+.inputContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+#inputTodo {
+	width: 250px;
+	height: 25px;
+	font-size: 1.25rem;
+}
+#add_todo {
+	height: 40px;
+	width: 40px;
+	border-radius: 20px;
+	border: none;
+	background-color: lightblue;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+.todoContainer {
+	border: 2px solid black;
+	width: 80vw;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.todo {
+	background-color: lightblue;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 10px;
+	padding: 0 10px;
+	font-size: 1.2rem;
+}
+.actions > form {
+	display: inline;
+}
+.action > form > button {
+	background-color: red;
+	color: white;
+	border: none;
+	padding: 5px;
+	font-size: 1.2rem;
+	cursor: pointer;
+	border-radius: 10px;
+}

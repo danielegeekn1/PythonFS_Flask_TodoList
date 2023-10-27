@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="{{url_for('static',filename='css/style.css')}}"
+		/>
+		<title>Python Todo List</title>
+	</head>
+	<body>
+		<h1>Todo List</h1>
+		<form action="{{url_for('home')}}" class="input_container" method="POST">
+			<input
+				type="text"
+				placeholder="Enter a todo"
+				id="inputTodo"
+				name="todoName"
+			/>
+			<button id="add_todo">+</button>
+		</form>
+		<h2>Todos</h2>
+		<div class="todoContainer">
+			{% for item in items %}
+			<div class="todo">
+				<p>{{ item.name }}</p>
+				<div class="actions">
+					<form
+						action="{{ url_for('checked_todo', todo_id=item.id) }}"
+						method="POST"
+						onchange="this.form.submit()"
+					>
+						<input type="checkbox" {% if item.checked %} checked {% endif %} />
+					</form>
+					<form
+						action="{{ url_for('delete_todo', todo_id=item.id) }}"
+						method="POST"
+					>
+						<button>Delete Todo</button>
+					</form>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</body>
+</html>
