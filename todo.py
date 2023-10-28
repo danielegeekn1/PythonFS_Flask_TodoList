@@ -10,7 +10,6 @@ DB_NAME = os.getenv('DB_NAME')
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_HOST = os.getenv('DB_HOST')
-print(DB_NAME)
 # Configura i dettagli di connessione
 db_params = {
     'dbname': DB_NAME,
@@ -39,7 +38,7 @@ def home():
         insert_query = "INSERT INTO py_todo_list (id, name, checked) VALUES (%s, %s, %s)"
         cur.execute(insert_query, (cur_id, todo_name, False))
         conn.commit()
-
+    todos.clear()
     # Esegui una query per ottenere tutti i "To-Do" dal database
     select_query = "SELECT * FROM py_todo_list"
     cur.execute(select_query)
@@ -55,12 +54,20 @@ def home():
     return render_template("index.html", items=todos)
 
 @app.route('/checked/<int:todo_id>', methods=["POST"])
-
 def checked_todo(todo_id):
-    for todo in todos:
-        if todo['id'] == todo_id:
-            todo['checked'] = not todo['checked']
-            break
+    # Trova l'elemento nel database
+    select_query = "SELECT checked FROM py_todo_list WHERE id = %s"
+    cur.execute(select_query, (todo_id,))
+    result = cur.fetchone()
+    
+    if result:
+        current_checked = result[0]
+        new_checked = not current_checked
+
+        update_query = "UPDATE py_todo_list SET checked = %s WHERE id = %s"
+        cur.execute(update_query, (new_checked, todo_id))
+        conn.commit()
+    
     return redirect(url_for('home'))
 
 @app.route('/delete/<int:todo_id>', methods=["POST"])
