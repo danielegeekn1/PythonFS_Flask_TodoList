@@ -83,11 +83,5 @@ def delete_todo(todo_id):
             todos.remove(todo)
 
     return redirect(url_for('home'))
-# def delete_todo(todo_id):
-#     global todos 
-#     for todo in todos:
-#         if todo['id'] == todo_id:
-#             todos.remove(todo)
-#     return redirect(url_for('home'))
 if __name__ == "__main__":
     app.run(debug=True)
