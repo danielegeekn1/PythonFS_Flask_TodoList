@@ -1,14 +1,23 @@
 from flask import Flask, render_template, url_for, request, redirect
 import psycopg2
 import os
+from dotenv import load_dotenv
 
-# Set environment variables
-os.environ['API_USER'] = 'username'
-USER = os.getenv('API_USER')
-print(USER)
+# Carica le variabili d'ambiente da file .env
+load_dotenv()
+# Leggi le variabili d'ambiente dal file .env
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_HOST = os.getenv('DB_HOST')
+print(DB_NAME)
 # Configura i dettagli di connessione
 db_params = {
- 
+    'dbname': DB_NAME,
+    'user': DB_USER,
+    'password': DB_PASSWORD,
+    'host': DB_HOST,
+    'port':5433
 }
 
 # Crea una connessione al database
@@ -47,12 +56,12 @@ def home():
 
 @app.route('/checked/<int:todo_id>', methods=["POST"])
 
-# def checked_todo(todo_id):
-#     for todo in todos:
-#         if todo['id'] == todo_id:
-#              todo['checked'] = not todo['checked']
-#              break
-#     return redirect(url_for('home'))
+def checked_todo(todo_id):
+    for todo in todos:
+        if todo['id'] == todo_id:
+            todo['checked'] = not todo['checked']
+            break
+    return redirect(url_for('home'))
 
 @app.route('/delete/<int:todo_id>', methods=["POST"])
 def delete_todo(todo_id):
